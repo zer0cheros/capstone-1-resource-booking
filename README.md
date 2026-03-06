@@ -75,3 +75,5 @@ Available routes:
 * POST → /api/resource - Create a new resource
 * GET → /api/booking - Getting all bookings
 * POST → /api/booking - Create a new booking
+* PUT → /api/booking - Update a booking
+* DELETE → /api/booking - Delete a booking
