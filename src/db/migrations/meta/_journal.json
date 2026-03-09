@@ -15,6 +15,13 @@
       "when": 1772613305700,
       "tag": "0001_true_hobgoblin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773077450688,
+      "tag": "0002_right_joseph",
+      "breakpoints": true
     }
   ]
 }

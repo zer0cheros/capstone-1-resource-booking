@@ -35,7 +35,7 @@ export default function createResourceDialog(
   const hasSingleElementChild = React.isValidElement(children);
   const form = useForm<CreateResourceInput>({
     resolver: zodResolver(createRoesourceSchema),
-    defaultValues: { name: "", description: "", userId: "123" },
+    defaultValues: { name: "", description: "", userId: "123", Image: "" },
   });
   const onSubmit = async (values: CreateResourceInput) => {
     try {
@@ -43,6 +43,7 @@ export default function createResourceDialog(
         name: values.name,
         description: values.description,
         userId: "123", // TODO: get user id from auth context
+        Image: values.Image
       });
       form.reset();
       setOpen(false);
@@ -92,6 +93,19 @@ export default function createResourceDialog(
                   <FormLabel>Discription</FormLabel>
                   <FormControl>
                     <Input placeholder="this is a hotel.." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="Image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Add url for image" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -8,7 +8,8 @@ export async function createResource(input: CreateResourceInput) {
         id: createId(),
         userId: input.userId,
         name: input.name,
-        description: input.description
+        description: input.description,
+        image: input.Image
     }).returning();
     if (!data.length) throw new Error("insert-failed");
     return data[0];
