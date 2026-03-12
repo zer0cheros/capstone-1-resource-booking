@@ -36,7 +36,12 @@ export default function createResourceDialog(
   const hasSingleElementChild = React.isValidElement(children);
   const form = useForm<CreateResourceInput>({
     resolver: zodResolver(createRoesourceSchema),
-    defaultValues: { name: "", description: "", userId: "123", Image: undefined },
+    defaultValues: {
+      name: "",
+      description: "",
+      userId: "123",
+      Image: undefined,
+    },
   });
   const onSubmit = async (values: CreateResourceInput) => {
     try {
@@ -70,21 +75,30 @@ export default function createResourceDialog(
           // Default trigger: *no* asChild, so Radix renders its own button element
           <DialogTrigger>Add resource</DialogTrigger>
         )}
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg rounded-3xl border-white/20 bg-white/80 backdrop-blur-xl shadow-2xl">
         <DialogHeader>
-          <DialogTitle>Add resource</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Add resource</DialogTitle>
           <DialogDescription>Here you can add resources</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 pt-4"
+          >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel className="font-semibold text-slate-700">
+                    Name
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. MacBook Pro M3 #04" {...field} />
+                    <Input
+                      className="rounded-xl h-12 bg-white/50"
+                      placeholder="e.g. MacBook Pro M3 #04"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,9 +109,15 @@ export default function createResourceDialog(
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="font-semibold text-slate-700">
+                    Description
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. 16-inch model, 32GB RAM, includes charger..." {...field} />
+                    <Input
+                      className="rounded-xl h-12 bg-white/50"
+                      placeholder="e.g. 16-inch model, 32GB RAM, includes charger..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,9 +128,12 @@ export default function createResourceDialog(
               name="Image"
               render={({ field: { value, onChange, ...field } }) => (
                 <FormItem>
-                  <FormLabel>Image</FormLabel>
+                  <FormLabel className="font-semibold text-slate-700">
+                    Image
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      className="rounded-xl h-12 bg-white/50 pt-2 cursor-pointer"
                       type="file"
                       accept="image/*"
                       {...field}
@@ -124,17 +147,21 @@ export default function createResourceDialog(
                 </FormItem>
               )}
             />
-            <DialogFooter className="gap-2 sm:gap-3">
+            <DialogFooter className="flex flex-row items-center justify-end gap-3 pt-4">
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 onClick={() => setOpen(false)}
                 disabled={isPending}
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isPending}>
-                {isPending ? "Creating" : "Create resource"}
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="bg-[#1980D5] hover:bg-[#1181c4] rounded-xl px-8 shadow-md"
+              >
+                {isPending ? "Creating..." : "Create resource"}
               </Button>
             </DialogFooter>
           </form>

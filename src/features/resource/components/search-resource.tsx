@@ -29,21 +29,20 @@ export default function SearchResource() {
     }, 300);
 
     return (
-        <div className="relative w-full max-w-lg">
-            <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10" />
+        <div className="relative w-full">
+            <IconSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slae-400 z-10 size-6" />
             <Input
                 onChange={(e) => {
                     setValue(e.target.value);
                     handleSearch(e.target.value);
                 }}
                 value={value}
-                placeholder="Search"
+                placeholder="Search shared resources..."
                 className={cn(
                     "h-14 pl-12 text-xl md:text-xl",
-                    "bg-white brder-2 border-border shadow-sm",
-                    "focus:border-primary focus:ring-2 focus:ring-primary/20",
-                    "transition-all duration-200",
-                    "focus:caret-primary hover:caret-black",
+                    "bg-white brder-slate-200 shadow-sm",
+                    "focus:border-[#1980D5] focus:ring-4 focus:ring-[#1980D5]/10",
+                    "transition-all duration-300 placeholder:text-slate-400",
                 )}
             />
         </div>

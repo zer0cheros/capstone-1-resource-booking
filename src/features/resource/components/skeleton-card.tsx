@@ -12,15 +12,18 @@ export default function SkeletonCard() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {skeletonCards.map((_, index) => (
-                <Card key={index} className="relative mx-auto w-full max-w-sm pt-0 overflow-hidden">
+                <Card
+                    key={index}
+                    className="relative w-full max-w-sm pt-0 overflow-hidden"
+                >
                     <Skeleton className="aspect-video w-full rounded-none" />
                     <CardHeader>
-                        <Skeleton className="h-4 w-1/2 mb-2" />
-                        <Skeleton className="h-4 w-2/3" />
+                        <Skeleton className="h-5 w-3/4 mb-2 rounded-md" />
+                        <Skeleton className="h-4 w-full rounded-md" />
                     </CardHeader>
                     <CardFooter className="flex items-center justify-evenly gap-3">
-                        <Skeleton className="h-10 flex-1" />
-                        <Skeleton className="h-10 flex-1" />
+                        <Skeleton className="h-10 flex-1 rounded-xl" />
+                        <Skeleton className="h-10 flex-1 rounded-xl" />
                     </CardFooter>
                 </Card>
             ))}

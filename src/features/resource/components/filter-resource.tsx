@@ -10,40 +10,47 @@ import {
     DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import { cn } from "@/shared/lib/utils";
+import { IconFilter } from "@tabler/icons-react";
 
 export default function FilterResource() {
     const [filterByName, setFilterByName] = useState<boolean>(false);
     const [filterByPrice, setFilterByPrice] = useState<boolean>(false);
 
     return (
-        <div>
+        <div className="w-full md:w-48">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button
                         variant="outline"
                         className={cn(
-                            "h-14 text-xl px-8",
-                            "w-full sm:w-32 md:w-40 lg:w-48",
-                            "transition-all duration-200 shadow-sm bg-white ccursor-pointer"
+                            "h-14 text-xl px-8 w-full md:w-48",
+                            "rounded-xl border-slate-200 bg-white/70 backdrop-blur-sm shadow-sm",
+                            "hover:bg-slate-50 transition-all duration-300",
                         )}
                     >
+                        <IconFilter className="mr-2 size-5 text-slate-500" />
                         Filter
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48" align="end">
+                <DropdownMenuContent
+                    className="w-56 rounded-2xl p-2 shadow-2xl border-white/20 bg-white/90 backdrop-blur-md"
+                    align="end"
+                >
                     <DropdownMenuGroup>
-                        <DropdownMenuLabel>Filter resources</DropdownMenuLabel>
+                        <DropdownMenuLabel className="px-3 py-2 text-slate-500 uppercase text-[10px] tracking-widset font-bold">
+                            Sort & Filter
+                        </DropdownMenuLabel>
                         <DropdownMenuCheckboxItem
-                            checked={filterByName ?? false}
+                            checked={filterByName}
                             onCheckedChange={setFilterByName}
-                            className="py-3 text-base"
+                            className="rounded-lg py-3 text-base focus:bg-[#1980D5]/10 focus:text-[#1980D5] cursor-pointer transition-colors"
                         >
                             Name
                         </DropdownMenuCheckboxItem>
                         <DropdownMenuCheckboxItem
                             checked={filterByPrice}
                             onCheckedChange={setFilterByPrice}
-                            className="py-3 text-base"
+                            className="rounded-lg py-3 text-base focus:bg-[#1980D5]/10 focus:text-[#1980D5] cursor-pointer transition-colors"
                         >
                             Price
                         </DropdownMenuCheckboxItem>

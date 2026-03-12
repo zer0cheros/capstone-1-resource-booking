@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card";
 import { IconSearchOff } from "@tabler/icons-react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ListResource({ resources }: { resources: Resource[] }) {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
 
   const handleResetFilters = () => {
     router.replace(pathname);
-  }
+  };
 
   return (
     <>
@@ -28,7 +28,10 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
         ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-between">
             {resources.map((res: Resource) => (
-              <Card key={res.id} className="relative w-full max-w-sm pt-0 overflow-hidden">
+              <Card
+                key={res.id}
+                className="relative w-full max-w-sm pt-0 overflow-hidden"
+              >
                 <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                 {res.image
                   ? (
@@ -52,8 +55,8 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
                   </CardDescription>
                 </CardHeader>
                 <CardFooter className="flex items-center justify-evenly gap-3">
-                  <Button className="flex-1">View Details</Button>
-                  <Button className="flex-1">Book</Button>
+                  <Button className="flex-1 rounded-xl">View Details</Button>
+                  <Button className="flex-1 rounded-xl">Book</Button>
                 </CardFooter>
               </Card>
             ))}

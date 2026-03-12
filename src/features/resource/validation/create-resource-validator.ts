@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const createResourceSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
+    description: z.string().min(1, "Description is required"),
     userId: z.string().min(1, "User ID is required"),
     Image: z.instanceof(File).optional(),
 });
