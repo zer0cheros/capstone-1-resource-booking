@@ -6,3 +6,9 @@ export interface StepCardProps {
     title: string;
     description: string;
 }
+
+export interface CircularCardProps {
+    icon: LucideIcon;
+    feature: string;
+    description: string;
+}

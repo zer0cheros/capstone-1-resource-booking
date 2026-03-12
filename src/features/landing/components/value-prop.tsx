@@ -22,7 +22,7 @@ export default function ValueProposition() {
                     </h2>
                     <p className="text-xl text-slate-600 leading-relaxed">
                         Many individuals own vehicles, tools, or equipment used
-                        infrequently[cite: 11]. Stop letting your assets gather
+                        infrequently. Stop letting your assets gather
                         dust. OrderEase provides a reliable platform to rent
                         your resources to those who need temporary access.
                     </p>

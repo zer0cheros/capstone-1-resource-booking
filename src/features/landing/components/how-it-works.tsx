@@ -16,7 +16,8 @@ import { StepCard } from "./step-card";
 
 export default function HowItWorks() {
     return (
-        <section className="bg-white py-24 px-6 overflow-hidden">
+        <section className="relative bg-white py-24 px-6 overflow-hidden">
+            <div className="absolute inset-0 opacity-[0.1] pointer-events-none [background-image:radial-gradient(#63BE57_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">
@@ -45,7 +46,7 @@ export default function HowItWorks() {
                             >
                                 For Owners
                             </TabsTrigger>
-                        </TabsList> 
+                        </TabsList>
                     </div>
 
                     <TabsContent value="renters">
