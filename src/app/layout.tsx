@@ -34,12 +34,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-brand-light`}
       >
         <Providers>
           <div className="flex flex-col min-h-screen">
             {session?.user && <Navbar />}
-            <main className="flex-1 bg-[#DDEBF1]">
+            <main className="flex-1">
               {children}
             </main>
             <Toaster />

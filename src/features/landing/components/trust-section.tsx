@@ -26,7 +26,7 @@ const trustFeatures = [
 
 export default function TrustSection() {
     return (
-        <section className="relative py-32 overflow-hidden">
+        <section className="relative py-32 overflow-hidden bg-slate-50">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#63BE57]/10 blur-[120px] rounded full" />
 
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#1980D5]/10 blur-[120px] rounded full" />

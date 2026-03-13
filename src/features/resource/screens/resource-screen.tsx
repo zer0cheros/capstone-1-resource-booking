@@ -24,7 +24,7 @@ export default function resourceScreen() {
     ) ?? [];
 
   return (
-    <div className="p-6">
+    <div className="felx-1 py-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-10">
           <div className="flex flex-col gap-1">
@@ -40,10 +40,9 @@ export default function resourceScreen() {
             <CreateResourceDialog>
               <Button
                 className={cn(
-                  "h-12 md:h-14 text-xl px-6 py-3 hover:bg-[#1181c4] rounded-xl",
-                  "w-full sm:w-32 md:w-40 lg:w-48",
-                  "transition-all duration-300 shadow-md hover:shadow-xl hover:scale-105 active:scale-95",
-                  "w-full sm:w-auto",
+                  "h-14 px-8 rounded-xl",
+                  "transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95",
+                  "w-full md:w-auto text-lg font-bold",
                 )}
               >
                 <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">

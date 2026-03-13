@@ -13,6 +13,7 @@ import {
 } from "@/shared/components/ui/card";
 import { IconSearchOff } from "@tabler/icons-react";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ListResource({ resources }: { resources: Resource[] }) {
   const router = useRouter();
@@ -55,8 +56,10 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
                   </CardDescription>
                 </CardHeader>
                 <CardFooter className="flex items-center justify-evenly gap-3">
-                  <Button className="flex-1 rounded-xl">View Details</Button>
-                  <Button className="flex-1 rounded-xl">Book</Button>
+                  <Link href={`/resources/${res.id}`}>
+                    <Button className="flex-1 rounded-xl hover:-translate-y-1 transition-all duration-300">View Details</Button>
+                  </Link>
+                  <Button className="flex-1 rounded-xl hover:-translate-y-1 transition-all duration-300">Book</Button>
                 </CardFooter>
               </Card>
             ))}

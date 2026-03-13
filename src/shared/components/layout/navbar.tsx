@@ -25,7 +25,7 @@ const Navbar = () => {
     const navlinks = [
         { name: "Resources", href: "/resources" },
         { name: "Bookings", href: "/bookings" },
-        { name: "Profile", href: "/profile" },
+        { name: "Favorites", href: "/favorites" },
     ];
 
     return (
@@ -92,7 +92,8 @@ const Navbar = () => {
                     <DropdownMenuContent>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
+                            <DropdownMenuItem>My Listings</DropdownMenuItem>
+                            <DropdownMenuItem>Incoming Requests</DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
