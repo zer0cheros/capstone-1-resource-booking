@@ -5,6 +5,8 @@ export const createResourceSchema = z.object({
     description: z.string().min(1, "Description is required"),
     userId: z.string().min(1, "User ID is required"),
     Image: z.instanceof(File).optional(),
+    price: z.number().min(0, "Price must be a positive number").optional(),
+    category: z.enum(["Appartments & Spaces", "Tools & Equipment", "Office & Teach"]).optional(),
 });
 
 export type CreateResourceInput = z.infer<typeof createResourceSchema>;
