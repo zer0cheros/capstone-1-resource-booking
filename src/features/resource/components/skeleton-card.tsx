@@ -18,8 +18,13 @@ export default function SkeletonCard() {
                 >
                     <Skeleton className="aspect-video w-full rounded-none" />
                     <CardHeader>
+                        <Skeleton className="h-3 w-3/4 mb-2 rounded-md" />
                         <Skeleton className="h-5 w-3/4 mb-2 rounded-md" />
                         <Skeleton className="h-4 w-full rounded-md" />
+                        <div className="flex items-center justify-between gap-6 mt-8">
+                            <Skeleton className="h-4 w-1/2 rounded-md" />
+                            <Skeleton className="h-4 w-1/2 rounded-md" />
+                        </div>
                     </CardHeader>
                     <CardFooter className="flex items-center justify-evenly gap-3">
                         <Skeleton className="h-10 flex-1 rounded-xl" />

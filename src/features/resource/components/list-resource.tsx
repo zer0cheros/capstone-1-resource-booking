@@ -15,7 +15,7 @@ import {
 import { IconSearchOff } from "@tabler/icons-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { DollarSign } from "lucide-react";
+import { Bookmark, DollarSign } from "lucide-react";
 
 export default function ListResource({ resources }: { resources: Resource[] }) {
   const router = useRouter();
@@ -42,12 +42,24 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
                   className="relative z-20 aspect-video w-full object-cover brightness-100 dark:brightness-60"
                 />
                 <CardHeader>
-                  <CardDescription className="text-[10px] text-gb-blue font-bold tracking-widest uppercase">
-                    {res.category}
-                  </CardDescription>
-                  <CardTitle className="text-xl font-bold text-slate-900 line-clamp-1">
-                    {res.name}
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardDescription className="text-[10px] text-gb-blue font-bold tracking-widest uppercase">
+                        {res.category}
+                      </CardDescription>
+                      <CardTitle className="text-xl font-bold text-slate-900 line-clamp-1">
+                        {res.name}
+                      </CardTitle>
+                    </div>
+
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-transparent group"
+                    >
+                      <Bookmark className="size-6 transition-colors group-hover:text-gb-blue" />
+                    </Button>
+                  </div>
                   <CardDescription className="text-sm line-clamp-2 min-h-[40px]">
                     {res.description}
                   </CardDescription>

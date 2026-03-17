@@ -18,6 +18,14 @@ import {
     DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import LogoutButton from "@/features/auth/components/logout-button";
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "../ui/sheet";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -29,29 +37,73 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="flex items-center justify-between px-4 sm:px-8 h-25 bg-white border-b border-transparent">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 ">
-                <Image
-                    src="/assets/logo.png"
-                    alt="Logo"
-                    width={70}
-                    height={70}
-                    priority
-                />
-
-                <div className="flex">
-                    <h1 className="text-[#1980D5] font-bold text-xl sm:text-2xl">
-                        Order
-                    </h1>
-                    <h1 className="text-[#63BE57] font-bold text-xl sm:text-2xl">
-                        Ease
-                    </h1>
+        <div className="flex items-center justify-between px-4 sm:px-8 h-20 bg-white border-b border-slate-100 shadow-sm sticky top-0 z-50">
+            {/* Left Section: Mobile Menu & logo */}
+            <div className="flex items-center gap-4">
+                <div className="sm:hidden">
+                    <Sheet>
+                        <SheetTrigger>
+                            <Button variant="ghost">
+                                <Menu className="size-6" />
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent
+                            side="left"
+                            className="w-[250px] sm:w-[300px]"
+                        >
+                            <SheetHeader className="text-left mb-8">
+                                <SheetTitle className="flex items-center">
+                                    <span className="text-gb-blue">
+                                        Order
+                                    </span>
+                                    <span className="text-gb-green">Ease</span>
+                                </SheetTitle>
+                            </SheetHeader>
+                            <nav className="flex flex-col gap-4">
+                                {navlinks.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        className={cn(
+                                            "text-lg font-semibold p-2 rounded-md transition-colors",
+                                            pathname === link.href
+                                                ? "bg-blue-50 text-[#139DED]"
+                                                : "text-slate-600 hover:bg-slate-50",
+                                        )}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </nav>
+                        </SheetContent>
+                    </Sheet>
                 </div>
-            </Link>
+
+                {/* Logo */}
+                <Link href="/" className="flex items-center gap-1 sm:gap-3 ">
+                    <div className="relative w-10 h-10 sm:w-16 sm:h-16">
+                        <Image
+                            src="/assets/logo.png"
+                            alt="Logo"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+
+                    <div className="flex font-bold text-base sm:text-2xl">
+                        <h1 className="text-gb-blue">
+                            Order
+                        </h1>
+                        <h1 className="text-gb-green">
+                            Ease
+                        </h1>
+                    </div>
+                </Link>
+            </div>
 
             {/* Pages */}
-            <div className="hidden sm:flex gap-6 md:gap-10 h-full">
+            <nav className="hidden sm:flex gap-6 md:gap-10 h-full">
                 {navlinks.map((link) => {
                     const isActive = pathname === link.href;
                     return (
@@ -72,7 +124,7 @@ const Navbar = () => {
                         </Link>
                     );
                 })}
-            </div>
+            </nav>
 
             {/* Avatar */}
             <div className="">
@@ -93,7 +145,9 @@ const Navbar = () => {
                         <DropdownMenuGroup>
                             <DropdownMenuItem>Profile</DropdownMenuItem>
                             <DropdownMenuItem>My Listings</DropdownMenuItem>
-                            <DropdownMenuItem>Incoming Requests</DropdownMenuItem>
+                            <DropdownMenuItem>
+                                Incoming Requests
+                            </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>

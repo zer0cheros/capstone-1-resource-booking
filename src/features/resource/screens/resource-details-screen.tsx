@@ -13,10 +13,10 @@ export default function ResourceDetailsScreen(
                 <ResourceBreadcrumb resource={resource} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-10 gap-10 items-center">
-                <div className="lg:col-span-4">
+                <div className="col-span-full lg:col-span-4">
                     <ResourceImage src={resource.image} alt={resource.name} />
                 </div>
-                <div className="col-span-6">
+                <div className="col-span-full lg:col-span-6">
                     <ResourceDetails resource={resource} />
                 </div>
             </div>

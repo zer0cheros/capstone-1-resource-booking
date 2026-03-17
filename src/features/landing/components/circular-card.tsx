@@ -4,7 +4,7 @@ import { CircularCardProps } from "../types/landing";
 export const CircularCard = (
     { icon: Icon, feature, description }: CircularCardProps,
 ) => (
-    <div className="group flex flex-col items-center justify-center z-50
+    <div className="group flex flex-col items-center justify-center
                     h-80 w-80 lg:h-96 lg:w-96 aspect-square flex-shrink-0
                     rounded-full bg-white/70 backdrop-blur-sm p-10 gap-4
                     border border-white shadow-xl shadow-slate-200/50
