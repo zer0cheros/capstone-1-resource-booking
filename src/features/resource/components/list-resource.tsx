@@ -5,8 +5,6 @@ import { Resource } from "../types/resource";
 import { Button } from "@/shared/components/ui/button";
 import {
   Card,
-  CardAction,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -84,15 +82,17 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
                     </div>
                   </div>
                 </CardHeader>
-                <CardFooter className="flex items-center justify-evenly gap-3">
-                  <Link href={`/resources/${res.id}`}>
-                    <Button className="flex-1 rounded-xl hover:-translate-y-1 transition-all duration-300">
+                <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <Link href={`/resources/${res.id}`} className="w-full sm:flex-1">
+                    <Button className="w-full rounded-xl hover:-translate-y-1 transition-all duration-300">
                       View Details
                     </Button>
                   </Link>
-                  <Button className="flex-1 rounded-xl hover:-translate-y-1 transition-all duration-300">
-                    Book Now
-                  </Button>
+                  <Link href={`/resources/${res.id}?action=book`} className="w-full sm:flex-1">
+                    <Button className="w-full bg-gb-blue hover:bg-gb-blue/90 rounded-xl hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-gb-blue/20">
+                      Book Now
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
             ))}

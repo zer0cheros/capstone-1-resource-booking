@@ -1,3 +1,5 @@
+import { DateRange } from "react-day-picker";
+
 export type Resource = {
     id: string;
     userId: string;
@@ -21,4 +23,22 @@ export type ResourceDetailsPageprops = {
 export type ResourceImageProps = {
     src: string | null | undefined;
     alt: string;
+}
+
+export type BookingDatePickerProps = {
+    date: DateRange | undefined;
+    onSelect: (date: DateRange | undefined) => void;
+    bookedRanges: DateRange[];
+}
+
+export type BookingPriceSummaryProps = {
+    price: number;
+    days: number;
+}
+
+export type BookingSubmitButtonProps = {
+    onClick: () => void;
+    isLoading: boolean;
+    disabled: boolean;
+    isRangeInvalid: boolean;
 }
