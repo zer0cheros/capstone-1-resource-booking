@@ -1,27 +1,43 @@
 "use client";
 import { Card } from "@/shared/components/ui/card";
 import { Resource } from "../../types/resource";
-import BookingDatePicker from "./booking-date-picker";
 import BookingPriceSummary from "./booking-price-summary";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { differenceInDays, format } from "date-fns";
+import {
+    differenceInDays,
+    differenceInHours,
+    differenceInMonths,
+} from "date-fns";
 import useBookingQuery from "@/features/booking/hooks/use-booking-query";
 import { Booking } from "@/features/booking/types/booking";
 import useCreateBookingMutation from "@/features/booking/hooks/use-booking-create-query";
 import BookingSubmitButton from "./booking-submit-button";
 import { cn } from "@/shared/lib/utils";
+import BookingPickerManager from "./booking-picker-manager";
+import { useRouter } from "next/navigation";
 
 export default function ResourceBookingCard(
     { resource, expanded }: { resource: Resource; expanded: boolean },
 ) {
+    const router = useRouter();
     const { data: bookings } = useBookingQuery();
     const { mutate, isPending } = useCreateBookingMutation();
     const [date, setDate] = useState<DateRange | undefined>(undefined);
 
-    const calculatedDays = (date?.from && date?.to)
-        ? differenceInDays(date.to, date.from) + 1
-        : 0;
+    const bookingDuration = (() => {
+        if (!date?.from || !date?.to) return 0;
+
+        if (resource.priceUnit === "hour") {
+            return differenceInHours(date.to, date.from);
+        }
+
+        if (resource.priceUnit === "month") {
+            return differenceInMonths(date.to, date.from);
+        }
+
+        return differenceInDays(date.to, date.from) + 1;
+    })();
 
     const datesSelected = !!(date?.from && date?.to);
 
@@ -34,20 +50,21 @@ export default function ResourceBookingCard(
 
     const isRangeInvalid = date?.from && date?.to &&
         bookedRanges.some((range: DateRange) => {
-            const selectedFrom = date.from!;
-            const selectedTo = date.to!;
+            const selectedFrom = date.from!.getTime();
+            const selectedTo = date.to!.getTime();
+            const rangeFrom = range.from!.getTime();
+            const rangeTo = range.to!.getTime();
 
-            const startOverlap = range.from && range.from >= selectedFrom &&
-                range.from <= selectedTo;
-
-            const endOverlap = range.to && range.to >= selectedFrom &&
-                range.to <= selectedTo;
-
-            return startOverlap || endOverlap;
+            return selectedFrom < rangeTo && selectedTo > rangeFrom;
         });
 
+    const isTimeOrderInvalid = resource.priceUnit === "hour" &&
+        date?.from && date?.to && date.from >= date.to;
+
     const onBook = () => {
-        if (!date?.from || !date?.to) return;
+        if (!date?.from || !date?.to || isRangeInvalid || isTimeOrderInvalid) {
+            return;
+        }
 
         mutate({
             resourceId: resource.id,
@@ -56,6 +73,7 @@ export default function ResourceBookingCard(
         }, {
             onSuccess: () => {
                 setDate(undefined);
+                router.push("/resources");
             },
         });
     };
@@ -84,17 +102,20 @@ export default function ResourceBookingCard(
             </div>
 
             <div className="space-y-6">
-                <BookingDatePicker
+                <BookingPickerManager
+                    unit={resource.priceUnit}
                     date={date}
                     onSelect={setDate}
                     bookedRanges={bookedRanges}
                 />
 
-                {datesSelected && (
+                {datesSelected && !isRangeInvalid && !isTimeOrderInvalid &&
+                    bookingDuration > 0 && (
                     <div className="animate-in fade-in slide-in-from-top-2">
                         <BookingPriceSummary
                             price={resource.price}
-                            days={calculatedDays}
+                            duration={bookingDuration}
+                            priceUnit={resource.priceUnit}
                         />
                     </div>
                 )}
@@ -102,8 +123,9 @@ export default function ResourceBookingCard(
                 <BookingSubmitButton
                     onClick={onBook}
                     isLoading={isPending}
-                    disabled={!datesSelected}
-                    isRangeInvalid={false}
+                    disabled={!datesSelected || bookingDuration <= 0 ||
+                        isTimeOrderInvalid}
+                    isRangeInvalid={!!isRangeInvalid || !!isTimeOrderInvalid}
                 />
             </div>
         </Card>

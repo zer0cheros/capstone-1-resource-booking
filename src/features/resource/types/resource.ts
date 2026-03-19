@@ -17,7 +17,7 @@ type category = "Apartments & Spaces" | "Vehicles & Transport" | "Tools & Equipm
 type priceUnit = "hour" | "day" | "week" | "month";
 
 export type ResourceDetailsPageprops = {
-    params: Promise<{ resourceId: string}>;
+    params: Promise<{ resourceId: string }>;
 }
 
 export type ResourceImageProps = {
@@ -25,7 +25,7 @@ export type ResourceImageProps = {
     alt: string;
 }
 
-export type BookingDatePickerProps = {
+export type BookingPickerProps = {
     date: DateRange | undefined;
     onSelect: (date: DateRange | undefined) => void;
     bookedRanges: DateRange[];
@@ -33,12 +33,20 @@ export type BookingDatePickerProps = {
 
 export type BookingPriceSummaryProps = {
     price: number;
-    days: number;
+    duration: number;
+    priceUnit: priceUnit;
 }
 
 export type BookingSubmitButtonProps = {
     onClick: () => void;
     isLoading: boolean;
-    disabled: boolean;
+    disabled: boolean | undefined;
     isRangeInvalid: boolean;
+}
+
+export type BookingPickerManagerProps = {
+    unit: 'hour' | 'day' | 'week' | 'month';
+    date: DateRange | undefined;
+    onSelect: (date: DateRange | undefined) => void;
+    bookedRanges: DateRange[];
 }

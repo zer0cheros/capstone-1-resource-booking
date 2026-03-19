@@ -10,10 +10,10 @@ import {
 } from "@/shared/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { BookingDatePickerProps } from "../../types/resource";
+import { BookingPickerProps } from "../../types/resource";
 
 export default function BookingDatePicker(
-    { date, onSelect, bookedRanges }: BookingDatePickerProps,
+    { date, onSelect, bookedRanges }: BookingPickerProps,
 ) {
     return (
         <Field className="w-full">
