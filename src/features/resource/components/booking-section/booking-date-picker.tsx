@@ -13,8 +13,29 @@ import { CalendarIcon } from "lucide-react";
 import { BookingPickerProps } from "../../types/resource";
 
 export default function BookingDatePicker(
-    { date, onSelect, bookedRanges }: BookingPickerProps,
+    { date, onSelect, bookedRanges, mode = "range" }: BookingPickerProps
 ) {
+    // react-day-picker expects different `selected`/`onSelect` shapes depending on mode.
+    // In "single" mode it works with a `Date`, while the rest of our app uses `DateRange`.
+    const calendarSelected = mode === "single" ? date?.from : date;
+
+    const handleCalendarSelect = (selected: unknown) => {
+        if (mode === "single") {
+            // In single mode, react-day-picker returns `Date | undefined`.
+            const d = selected as Date | undefined;
+            if (!d) {
+                onSelect(undefined);
+                return;
+            }
+            // Convert back into our `DateRange` shape so pickers can derive `to` themselves.
+            onSelect({ from: d, to: undefined });
+            return;
+        }
+
+        // In range mode, react-day-picker returns `DateRange | undefined`.
+        onSelect(selected as any);
+    };
+
     return (
         <Field className="w-full">
             <FieldLabel htmlFor="date-picker-range">
@@ -50,10 +71,10 @@ export default function BookingDatePicker(
                     align="start"
                 >
                     <Calendar
-                        mode="range"
+                        mode={mode as any}
                         defaultMonth={date?.from}
-                        selected={date}
-                        onSelect={onSelect}
+                        selected={calendarSelected}
+                        onSelect={handleCalendarSelect}
                         numberOfMonths={2}
                         disabled={[
                             { before: new Date() },

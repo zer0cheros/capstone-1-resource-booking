@@ -8,6 +8,7 @@ import {
     differenceInDays,
     differenceInHours,
     differenceInMonths,
+    differenceInWeeks,
 } from "date-fns";
 import useBookingQuery from "@/features/booking/hooks/use-booking-query";
 import { Booking } from "@/features/booking/types/booking";
@@ -34,6 +35,11 @@ export default function ResourceBookingCard(
 
         if (resource.priceUnit === "month") {
             return differenceInMonths(date.to, date.from);
+        }
+
+        if (resource.priceUnit === "week") {
+            const totalDays =  differenceInWeeks(date.to, date.from) + 1;
+            return Math.max(1, Math.round(totalDays / 7));
         }
 
         return differenceInDays(date.to, date.from) + 1;

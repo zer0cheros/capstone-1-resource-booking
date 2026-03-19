@@ -29,6 +29,7 @@ export type BookingPickerProps = {
     date: DateRange | undefined;
     onSelect: (date: DateRange | undefined) => void;
     bookedRanges: DateRange[];
+    mode?: "single" | "range";
 }
 
 export type BookingPriceSummaryProps = {
