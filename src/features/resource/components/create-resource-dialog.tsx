@@ -25,6 +25,14 @@ import {
   CreateResourceInput,
   createRoesourceSchema,
 } from "../validation/create-resource-validator";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
 import { useForm } from "react-hook-form";
 import { Button } from "@/shared/components/ui/button";
 
@@ -37,18 +45,24 @@ export default function createResourceDialog(
   const form = useForm<CreateResourceInput>({
     resolver: zodResolver(createRoesourceSchema),
     defaultValues: {
+      category: undefined,
       name: "",
       description: "",
       userId: "123",
+      price: 0,
+      priceUnit: undefined,
       Image: undefined,
     },
   });
   const onSubmit = async (values: CreateResourceInput) => {
     try {
       const formData = new FormData();
+      formData.append("category", values.category);
       formData.append("name", values.name);
       formData.append("description", values.description ?? "");
-      formData.append("userId", "123"); // TODO: get user id from auth context
+      formData.append("userId", "123");
+      formData.append("price", (values.price ?? 0).toString());
+      formData.append("priceUnit", values.priceUnit);
       if (values.Image instanceof File) {
         formData.append("image", values.Image);
       }
@@ -87,6 +101,44 @@ export default function createResourceDialog(
           >
             <FormField
               control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-slate-700">
+                    Category
+                  </FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full rounded-xl !h-12 bg-white/50">
+                        <SelectValue placeholder="Choose a category" />
+                      </SelectTrigger>
+                      <SelectContent position="popper" className="bg-white ">
+                        <SelectGroup>
+                          <SelectItem value="Apartments & Spaces">
+                            Apartments & Spaces
+                          </SelectItem>
+                          <SelectItem value="Vehicles & Transport">
+                            Vehicles & Transport
+                          </SelectItem>
+                          <SelectItem value="Tools & Equipment">
+                            Tools & Equipment
+                          </SelectItem>
+                          <SelectItem value="Office & Tech">
+                            Office & Tech
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
@@ -123,6 +175,74 @@ export default function createResourceDialog(
                 </FormItem>
               )}
             />
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-semibold text-slate-700">
+                      Price
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-medium">
+                          $
+                        </span>
+
+                        <Input
+                        type="number"
+                          className="rounded-xl h-12 bg-white/50 pl-8"
+                          placeholder="0.00"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.valueAsNumber | 0)}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="priceUnit"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-semibold text-slate-700">
+                      Rent Duration
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-full rounded-xl !h-12 bg-white/50">
+                          <SelectValue placeholder="Select period..." />
+                        </SelectTrigger>
+                        <SelectContent position="popper" className="bg-white">
+                          <SelectGroup>
+                            <SelectItem value="hour">
+                              Hour
+                            </SelectItem>
+                            <SelectItem value="day">
+                              Day
+                            </SelectItem>
+                            <SelectItem value="week">
+                              Week
+                            </SelectItem>
+                            <SelectItem value="month">
+                              Month
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="Image"
@@ -159,7 +279,7 @@ export default function createResourceDialog(
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-[#1980D5] hover:bg-[#1181c4] rounded-xl px-8 shadow-md"
+                className="bg-gb-blue rounded-xl px-8 shadow-md"
               >
                 {isPending ? "Creating..." : "Create resource"}
               </Button>

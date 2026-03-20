@@ -11,6 +11,7 @@ export async function createResource(input: CreateResourceServerInput) {
         description: input.description,
         image: input.Image,
         price: input.price,
+        priceUnit: input.priceUnit,
         category: input.category,
     }).returning();
     if (!data.length) throw new Error("insert-failed");

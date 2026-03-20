@@ -11,22 +11,18 @@ import SkeletonCard from "../components/skeleton-card";
 import { cn } from "@/shared/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { Resource } from "../types/resource";
+import CategoryFilter from "../components/category-filter";
+import useResourceFilter from "../hooks/use-resource-filter";
 
 export default function resourceScreen() {
   const { data: resources, isPending } = useResourcesQuery();
 
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query")?.toString() ?? "";
-  const filteredResources =
-    resources?.filter((resource: Resource) =>
-      resource.name.toLocaleLowerCase().includes(query) ||
-      (resource.description?.toLocaleLowerCase().includes(query) ?? false)
-    ) ?? [];
+  const { filteredResources } = useResourceFilter(resources)
 
   return (
-    <div className="felx-1 py-6">
+    <div className="flex-1 py-6 mx-10">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 mb-10">
           <div className="flex flex-col gap-1">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               <span className="text-[#1980D5]">Shared</span> Resources
@@ -36,7 +32,7 @@ export default function resourceScreen() {
             </p>
           </div>
 
-          <div className="w-32 sm:w-auto">
+          <div className="w-auto">
             <CreateResourceDialog>
               <Button
                 className={cn(
@@ -57,13 +53,15 @@ export default function resourceScreen() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between mb-10">
-          <div className="flex-1 max-w-xl">
+          <div className="w-full md:flex-1 ">
             <SearchResource />
           </div>
           <div className="w-full md:w-auto">
             <FilterResource />
           </div>
         </div>
+
+        <CategoryFilter />
 
         <div className="">
           {isPending

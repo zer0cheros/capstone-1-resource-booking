@@ -8,3 +8,9 @@ export type Booking = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type CreateBookingPayload = {
+  resourceId: string;
+  startTime: string;
+  endTime: string;
+}

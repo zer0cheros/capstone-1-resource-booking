@@ -29,6 +29,27 @@
       "when": 1773585200986,
       "tag": "0003_abnormal_kulan_gath",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1773587600000,
+      "tag": "0004_align_resource_type",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1773650000000,
+      "tag": "0005_rename_resource_type_column",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1773730000000,
+      "tag": "0006_fix_resource_type_enum",
+      "breakpoints": true
     }
   ]
 }

@@ -21,6 +21,9 @@ export async function POST(req: Request) {
         const description = (formData.get("description") as string) ?? "";
         const userId = formData.get("userId") as string;
         const imageFile = formData.get("image") as File | null;
+        const priceRaw = formData.get("price");
+        const priceUnit = formData.get("priceUnit") as string | null;
+        const category = formData.get("category") as string | null;
 
         if (!name?.trim()) {
             return new Response(
@@ -28,6 +31,13 @@ export async function POST(req: Request) {
                 { status: 400, headers: { "Content-Type": "application/json" } }
             );
         }
+
+        const price =
+            typeof priceRaw === "string"
+                ? Number.parseFloat(priceRaw)
+                : typeof priceRaw === "number"
+                    ? priceRaw
+                    : 0;
 
         let imageUrl: string | undefined;
 
@@ -47,6 +57,9 @@ export async function POST(req: Request) {
             description,
             userId,
             Image: imageUrl,
+            price,
+            priceUnit: (priceUnit ?? "hour") as any,
+            category: (category ?? "Apartments & Spaces") as any,
         });
 
         return new Response(JSON.stringify(newResource), {
@@ -56,6 +69,7 @@ export async function POST(req: Request) {
             }
         });
     } catch (err: unknown) {
+        console.error('CREATE RESOURCE ERROR:', err);
         const message = err instanceof Error ? err.message : "Failed to create resource";
         return new Response(
             JSON.stringify({ message }),
