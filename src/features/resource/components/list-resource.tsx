@@ -35,7 +35,7 @@ export default function ListResource({ resources }: { resources: Resource[] }) {
               >
                 <div className="absolute inset-0 aspect-video" />
                 <img
-                  src={res.image || "/assets/placeholder-resource.svg"}
+                  src={res.image || "/assets/placeholder.svg"}
                   alt={res.name}
                   className="relative z-20 aspect-video w-full object-cover brightness-100 dark:brightness-60"
                 />

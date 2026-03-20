@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { auth } from "@/features/auth/server/auth-server";
+import BookingScreen from "@/features/booking/screens/booking-screen";
 
 export default async function BookingsPage() {
 
@@ -11,7 +12,7 @@ export default async function BookingsPage() {
   if(session?.user){
     return(
         <div>
-            Bookings
+            <BookingScreen />
         </div>
     );
   }

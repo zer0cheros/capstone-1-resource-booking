@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ResourceImageProps } from "../types/resource";
 
 export default function ResourceImage({ src, alt }: ResourceImageProps) {
-    const imageSource = src || "/assets/placeholder-resource.svg";
+    const imageSource = src || "/assets/placeholder.svg";
 
     return (
         <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-slate-100 shadow-2xl border border-white/20">
