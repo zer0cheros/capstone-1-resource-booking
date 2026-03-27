@@ -141,11 +141,13 @@ export const createColumns = (resources: Resource[]): ColumnDef<Booking>[] => [
             const resource = resources.find((r) => r.id === row.resourceId);
             if (!resource) return 0;
 
-            return calculateBookingTotal(
+            const result = calculateBookingTotal(
                 row.startTime,
                 row.endTime,
                 resource,
             );
+
+            return result.total;
         },
         id: "total",
         header: ({ column }) => {

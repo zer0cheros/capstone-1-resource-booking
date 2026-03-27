@@ -17,5 +17,9 @@ export function calculateBookingTotal(startTime: Date, endTime: Date, resource: 
 
     const subtotal = duration * resource.price;
     const total = subtotal * 1.05;
-    return total;
+    return {
+        subtotal: Math.max(0, subtotal),
+        total: Math.max(0, total),
+        duration: Math.max(1, Math.ceil(duration))
+    };
 }

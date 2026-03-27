@@ -26,7 +26,7 @@ export default function HeaderSection(
             resource,
         );
 
-        return acc + bookingTotal;
+        return acc + bookingTotal.total;
     }, 0);
 
     const upcomingBookings = bookings.filter((b) =>

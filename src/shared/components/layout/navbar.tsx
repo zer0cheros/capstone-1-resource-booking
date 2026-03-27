@@ -194,7 +194,7 @@ const Navbar = ({ user }: NavbarProps) => {
                                 className="cursor-pointer py-3 rounded-lg"
                             >
                                 <Link
-                                    href="/requests"
+                                    href="/manage-bookings"
                                     className="flex items-center"
                                 >
                                     <Bell className="mr-3 size-4 text-slate-500" />
