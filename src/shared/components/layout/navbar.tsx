@@ -27,13 +27,15 @@ import {
 } from "../ui/sheet";
 import { Bell, Menu, Package, User } from "lucide-react";
 import { Session } from "@/features/auth/types/session";
+import { useState } from "react";
 
 type NavbarProps = {
     user: NonNullable<Session["user"]>;
-}
+};
 
 const Navbar = ({ user }: NavbarProps) => {
     const pathname = usePathname();
+    const [isOpen, setIsOpen] = useState(false);
 
     const navlinks = [
         { name: "Resources", href: "/resources" },
@@ -43,9 +45,7 @@ const Navbar = ({ user }: NavbarProps) => {
 
     const parts = user.name.trim().split(/\s+/);
     const first = parts[0]?.[0];
-    const last = parts.length > 1 
-        ? parts[parts.length - 1][0]
-        : "";
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
     const initials = (first + last).toUpperCase();
 
     return (
@@ -53,7 +53,7 @@ const Navbar = ({ user }: NavbarProps) => {
             {/* Left Section: Mobile Menu & logo */}
             <div className="flex items-center gap-4">
                 <div className="sm:hidden">
-                    <Sheet>
+                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
                         <SheetTrigger>
                             <Button variant="ghost">
                                 <Menu className="size-6" />
@@ -65,10 +65,14 @@ const Navbar = ({ user }: NavbarProps) => {
                         >
                             <SheetHeader className="text-left mb-8">
                                 <SheetTitle className="flex items-center">
-                                    <span className="text-gb-blue">
-                                        Order
-                                    </span>
-                                    <span className="text-gb-green">Ease</span>
+                                    <Link href="/" onClick={() => setIsOpen(false)}>
+                                        <span className="text-gb-blue">
+                                            Order
+                                        </span>
+                                        <span className="text-gb-green">
+                                            Ease
+                                        </span>
+                                    </Link>
                                 </SheetTitle>
                             </SheetHeader>
                             <nav className="flex flex-col gap-4">
@@ -76,6 +80,7 @@ const Navbar = ({ user }: NavbarProps) => {
                                     <Link
                                         key={link.href}
                                         href={link.href}
+                                        onClick={() => setIsOpen(false)}
                                         className={cn(
                                             "text-lg font-semibold p-2 rounded-md transition-colors",
                                             pathname === link.href

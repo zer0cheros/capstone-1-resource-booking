@@ -18,28 +18,26 @@ export default function ProfileScreen({ user }: ProfileProps) {
 
     return (
         <div className="flex-1 min-h-screen bg-slate-50/50 py-12 px-6 md:px-10">
-            <div className="max-w-5xl mx-auto flex flex-col gap-10">
+            <div className="max-w-5xl mx-auto flex flex-col gap-2">
                 <HeaderSection user={user} />
 
-                {/* 1. Overview */}
-                <div className="space-y-6">
-                    <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2">
-                        Overview
-                    </h2>
-                    <Stats resources={resources} bookings={bookings} />
-                </div>
-
-                {/* 2. Finance - New Modular Component */}
-                <FinanceSection historyRequests={requests}/>
-
-                {/* 3. Details & Support */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-                    <div className="lg:col-span-2">
-                        <DetailsForm />
+                <div className="flex flex-col gap-10">
+                    <div className="space-y-6">
+                        <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2">
+                            Overview
+                        </h2>
+                        <Stats resources={resources} bookings={bookings} />
                     </div>
-                    <div className="sticky top-24 lg:col-span-1">
-                        <SupportCard />{" "}
-                        {/* Refactored 'Need Help' to its own file too */}
+
+                    <FinanceSection historyRequests={requests} />
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                        <div className="lg:col-span-2">
+                            <DetailsForm />
+                        </div>
+                        <div className="sticky top-24 lg:col-span-1">
+                            <SupportCard />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -50,7 +50,7 @@ export default function HomeHero({ userName }: { userName: string }) {
             params.delete("query");
         }
 
-        replace(`${pathname}?${params.toString()}`);
+        replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, 400);
 
     const resources = [
@@ -140,7 +140,7 @@ export default function HomeHero({ userName }: { userName: string }) {
                             }
                         }}
                     >
-                        <div className="flex items-center bg-white p-2 rounded-[2rem] shadow-2xl border border-slate-100 focus-within:ring-4 ring-gb-blue/20 transition-all">
+                        {/* <div className="flex items-center bg-white p-2 rounded-[2rem] shadow-2xl border border-slate-100 focus-within:ring-4 ring-gb-blue/20 transition-all"> */}
                             <ComboboxInput
                                 value={search}
                                 onChange={(e) => {
@@ -148,9 +148,9 @@ export default function HomeHero({ userName }: { userName: string }) {
                                     handleSearch(e.target.value);
                                 }}
                                 placeholder="Search for resources..."
-                                className="border-none rounded-[2rem] shadow-none focus-visible:ring-0 text-lg font-medium h-12 !bg-transparent flex-1 px-4"
+                                className="h-14 w-full !bg-white border border-slate-100 shadow-2xl rounded-[2rem] px-6 text-lg font-medium transition-all"
                             />
-                        </div>
+                        {/* </div> */}
 
                         <ComboboxContent className="absolute top-full left-0 right-0 mt-3 z-50 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
                             <ComboboxEmpty className="p-8 text-center text-slate-400 font-medium">
@@ -179,16 +179,15 @@ export default function HomeHero({ userName }: { userName: string }) {
                                                     <ComboboxItem
                                                         key={item.id}
                                                         value={item.id}
-                                                        className="flex items-center px-4 py-3 rounded-xl cursor-pointer aria-selected:bg-slate-50 transition-colors font-bold text-slate-700"
+                                                        className="flex items-center gap-4 px-2 pb-2 rounded-[1.5rem] cursor-pointer transition-all data-[highlighted]:bg-gb-blue/5 data-[highlighted]:text-gb-blue group"
                                                     >
-                                                        <div className="size-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-aria-selected:bg-white group-aria-selected:text-gb-blue group-aria-selected:shadow-sm transition-all duration-300">
-                                                            <ItemIcon
-                                                                size={18}
-                                                            />
+                                                        <div className="size-10 shrink-0 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-data-[highlighted]:bg-white group-data-[highlighted]:text-gb-blue group-data-[highlighted]:shadow-sm transition-all duration-300">
+                                                            <ItemIcon size={18} />
                                                         </div>
                                                         <span className="font-bold text-base tracking-tight flex-1">
                                                             {item.label}
                                                         </span>
+                                                        <ArrowRight size={14} className="opacity-0 -translate-x-2 group-data-[highlighted]:opacity-100 group-data-[highlighted]:translate-x-0 transition-all duration-300" />
                                                     </ComboboxItem>
                                                 );
                                             }}
