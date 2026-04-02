@@ -1,17 +1,43 @@
 import { createResource } from "@/features/resource/server/create-resource";
-import { getResources } from "@/features/resource/server/get-resources";
+import { getPaginatedResources, getResources } from "@/features/resource/server/get-resources";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { createId } from "@paralleldrive/cuid2";
 
-export async function GET() {
-    const resources = await getResources();
-    return new Response(JSON.stringify(resources), {
-        status: 200,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const cursor = searchParams.get("cursor") ?? undefined;
+
+    try{
+        const { items, nextCursor } = await getPaginatedResources(limit, cursor);
+
+        return new Response(
+            JSON.stringify({
+                data: items,
+                nextCursor: nextCursor
+            }),
+            {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+    } catch (error) {
+        return new Response(
+            JSON.stringify({ message: "Failed to fetch resources" }),
+            { status: 500 }
+        );
+    }
+
+    // const resources = await getResources();
+    // return new Response(JSON.stringify(resources), {
+    //     status: 200,
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     }
+    // });
 }
 
 export async function POST(req: Request) {

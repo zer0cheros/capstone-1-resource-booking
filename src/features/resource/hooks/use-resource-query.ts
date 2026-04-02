@@ -6,12 +6,13 @@ async function fetchResources() {
         const errorData = await res.json();
         throw new Error(errorData.message || "Failed to fetch resources");
     }
-    return res.json();
+    const json = await res.json();
+    return json.data;
 }
 
 export default function useResourcesQuery() {
     return useQuery({
-        queryKey: ["resource"],
+        queryKey: ["resources"],
         queryFn: fetchResources,
         retry: false
     });

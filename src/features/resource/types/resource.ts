@@ -85,3 +85,10 @@ export type ResourceFormProps = {
     submitLabel: string;
     onCancel: () => void;
 }
+
+export type LoadMoreButtonProps = {
+    hasNextPage: boolean;
+    isFetchingNextPage: boolean;
+    fetchNextPage: () => void;
+    totalItems: number;
+}

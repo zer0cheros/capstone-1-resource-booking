@@ -33,7 +33,7 @@ export default function useDeleteResourceMutation() {
             return { toastid: toastId };
         },
         onSuccess: (_data, _variables, context) => {
-            queryClient.invalidateQueries({ queryKey: ["resource"] });
+            queryClient.invalidateQueries({ queryKey: ["resources"] });
             toast.success("Resource deleted!", {
                 id: context.toastid,
                 duration: 3000,

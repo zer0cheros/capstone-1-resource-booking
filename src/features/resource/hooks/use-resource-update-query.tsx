@@ -31,7 +31,7 @@ export default function useUpdateResourceMutation() {
             return { toastid: toastId };
         },
         onSuccess: (_data, _variables, context) => {
-            queryClient.invalidateQueries({ queryKey: ["resource"] });
+            queryClient.invalidateQueries({ queryKey: ["resources"] });
             toast.success("Resource updated!", {
                 id: context.toastid,
                 duration: 3000,

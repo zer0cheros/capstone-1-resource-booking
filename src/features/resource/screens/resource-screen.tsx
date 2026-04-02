@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import CreateResourceDialog from "../components/create-resource-dialog";
 import { Button } from "@/shared/components/ui/button";
-import useResourcesQuery from "../hooks/use-resource-query";
 import ListResource from "../components/list-resource";
 import { IconPlus } from "@tabler/icons-react";
 import SearchResource from "../components/search-resource";
@@ -13,12 +12,27 @@ import CategoryFilter from "../components/category-filter";
 import useResourceFilter from "../hooks/use-resource-filter";
 import useFavoritesQuery from "@/features/favorites/hooks/use-favorite-query";
 import { Session } from "@/features/auth/types/session";
+import useInfiniteResourcesQuery from "../hooks/use-infinite-resource-query";
+import LoadMoreButton from "../components/load-more-button";
 
-export default function resourceScreen({ user }: { user: NonNullable<Session["user"]>; }) {
-  const { data: resources, isPending } = useResourcesQuery();
-  const { data: favorites, isLoading: isFavoritesLoading } = useFavoritesQuery();
+export default function resourceScreen(
+  { user }: { user: NonNullable<Session["user"]> },
+) {
+  const {
+    data: resources,
+    isPending,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteResourcesQuery(12);
+  const { data: favorites, isLoading: isFavoritesLoading } =
+    useFavoritesQuery();
 
-  const { filteredResources } = useResourceFilter(resources);
+  const allResources = useMemo(() => {
+    return resources?.pages.flatMap((page) => page.data) ?? [];
+  }, [resources]);
+
+  const { filteredResources } = useResourceFilter(allResources);
 
   return (
     <div className="flex-1 py-6 mx-10">
@@ -65,9 +79,20 @@ export default function resourceScreen({ user }: { user: NonNullable<Session["us
         <CategoryFilter />
 
         <div className="">
-          {isPending || isFavoritesLoading
-            ? <SkeletonCard />
-            : <ListResource resources={filteredResources || []} userFavorites={favorites || []} />}
+          {isPending || isFavoritesLoading ? <SkeletonCard /> : (
+            <>
+              <ListResource
+                resources={filteredResources || []}
+                userFavorites={favorites || []}
+              />
+              <LoadMoreButton
+                hasNextPage={!!hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                fetchNextPage={fetchNextPage}
+                totalItems={allResources.length}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

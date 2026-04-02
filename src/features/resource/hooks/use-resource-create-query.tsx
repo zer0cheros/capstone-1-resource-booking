@@ -29,7 +29,7 @@ export default function useCreateResourceMutation() {
             return { toastId };
         },
         onSuccess: (data, variables, context) => {
-            queryClient.invalidateQueries({ queryKey: ["resource"] });
+            queryClient.invalidateQueries({ queryKey: ["resources"] });
             toast.success("Resource created", {
                 id: context.toastId,
                 duration: 2000,
