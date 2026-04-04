@@ -78,10 +78,13 @@ Available routes:
 * DELETE → /api/resource/[id] - Delete resource by id
 * GET → /api/resource/favorite - Get all favorites for the user
 * POST → /api/resource/favorite - Create a new favorite, with body { resourceId: string }, works as a toggle, if the favorite already exists it will be deleted
-* GET /api/resource?limit=12&cursor=clt123456789 - Fetches 12 resources created before the resource with ID clt123456789
+* GET → /api/resource?limit=12&cursor=clt123456789 - Fetches 12 resources created before the resource with ID clt123456789
+* GET → /api/resource/[id]/rating - Get the rating for resource by id
+* POST → /api/resource/[id]/rating - Rate a resource by id
 * GET → /api/booking - Getting all bookings
 * POST → /api/booking - Create a new booking
 * PUT → /api/booking - Update a booking
 * DELETE → /api/booking - Delete a booking
 * GET → /api/manage-bookings - Retrieve all incoming booking requests for resources owned by the current user (Provider view)
 * PUT → /api/manage-bookings - Update the status of an incoming request (e.g., set to confirmed or cancelled). Expects { id: string, status: BookingStatus }
+* GET → /api/profile/listings-rating-stats - Get the average stats for all the listed resources by a user
