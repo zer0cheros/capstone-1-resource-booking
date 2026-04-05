@@ -1,6 +1,4 @@
 "use client";
-
-import { Session } from "@/features/auth/types/session";
 import ResourceForm from "@/features/resource/components/resource-form";
 import useUpdateResourceMutation from "@/features/resource/hooks/use-resource-update-query";
 import { Resource } from "@/features/resource/types/resource";

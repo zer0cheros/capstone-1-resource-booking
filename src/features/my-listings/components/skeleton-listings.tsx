@@ -2,7 +2,6 @@
 
 import {
     Card,
-    CardContent,
     CardFooter,
     CardHeader,
 } from "@/shared/components/ui/card";

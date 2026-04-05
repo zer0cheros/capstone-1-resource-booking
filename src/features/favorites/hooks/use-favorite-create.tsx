@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreateFavoriteInput, Favorites } from "../types/favorites";
+import { CreateFavoriteInput } from "../types/favorites";
 import { Favorites as FavoritesTypes } from "../types/favorites";
 import toast from "react-hot-toast";
 

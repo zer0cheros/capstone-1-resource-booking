@@ -53,13 +53,6 @@ export default function ResourceBookingCard(
 
     const datesSelected = !!(date?.from && date?.to);
 
-    const bookedRanges = bookings
-        ?.filter((b: Booking) => b.resourceId === resource.id)
-        .map((b: Booking) => ({
-            from: new Date(b.startTime),
-            to: new Date(b.endTime),
-        })) || [];
-
     const activeBookings =
         bookings?.filter((b: Booking) =>
             b.resourceId === resource.id &&

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Resource, UpdatePayload } from "../types/resource";
+import { Resource } from "../types/resource";
 import toast from "react-hot-toast";
 
 async function handleUpdateResource(payload: FormData) {

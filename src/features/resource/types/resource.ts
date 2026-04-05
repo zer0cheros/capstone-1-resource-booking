@@ -1,4 +1,3 @@
-import { Booking } from "@/features/booking/types/booking";
 import { DateRange } from "react-day-picker";
 import { CreateResourceInput } from "../validation/create-resource-validator";
 

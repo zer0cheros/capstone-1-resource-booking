@@ -30,7 +30,7 @@ export default function useResourceFilter (resources: Resource[] | undefined) {
     const filteredResources = useMemo(() => {
         if(!resources) return [];
 
-        let result = resources.filter((res) => {
+        const result = resources.filter((res) => {
             const matchesSearch =
                 res.name.toLocaleLowerCase().includes(currentQuery) ||
                 res.description?.toLocaleLowerCase().includes(currentQuery);

@@ -1,12 +1,5 @@
 "use client";
-
-import { Card, CardContent } from "@/shared/components/ui/card";
 import { HeaderSectionProps } from "../types/booking";
-import {
-    differenceInDays,
-    differenceInHours,
-    differenceInMonths,
-} from "date-fns";
 import StatCard from "./stat-card";
 import { calculateBookingTotal } from "@/shared/lib/booking-utils";
 

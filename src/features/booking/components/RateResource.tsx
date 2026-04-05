@@ -11,7 +11,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/shared/components/ui/dialog";
 import { Field, FieldGroup } from "@/shared/components/ui/field";
 import { Label } from "@/shared/components/ui/label";

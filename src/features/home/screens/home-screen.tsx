@@ -10,7 +10,6 @@ import { calculateBookingTotal } from "@/shared/lib/booking-utils";
 import { ArrowRight, Building2, Car, Monitor, Wrench } from "lucide-react";
 import CategoryCard from "../components/category-card";
 import Link from "next/link";
-import ListingCard from "@/features/my-listings/components/listing-card";
 import useResourcesQuery from "@/features/resource/hooks/use-resource-query";
 import { Resource } from "@/features/resource/types/resource";
 import ListResource from "@/features/resource/components/list-resource";

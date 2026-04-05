@@ -1,6 +1,5 @@
 "use client";
 import { signOut } from "@/features/auth/client/auth-client";
-import { useRouter } from "next/navigation";
 import { DropdownMenuItem } from "@/shared/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
 
@@ -8,7 +7,6 @@ import { LogOut } from "lucide-react";
 // The line above tells Next.js that this component needs to run client side.
 
 export default function LogoutButton() {
-  const router = useRouter();
 
   const logout = async () => {
     await signOut({

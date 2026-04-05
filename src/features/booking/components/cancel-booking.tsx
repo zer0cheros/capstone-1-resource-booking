@@ -1,10 +1,9 @@
 import { DropdownMenuItem } from "@/shared/components/ui/dropdown-menu";
 import useDeleteBookingMutation from "../hooks/use-booking-delete-query";
-import useResourcesQuery from "@/features/resource/hooks/use-resource-query";
 import { Booking } from "../types/booking";
 
 export default function CancelBooking({ booking }: { booking: Booking }) {
-    const { mutate, isPending } = useDeleteBookingMutation();
+    const { mutate } = useDeleteBookingMutation();
 
     const onDelete = () => {
         mutate({

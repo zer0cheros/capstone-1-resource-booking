@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { auth } from "@/features/auth/server/auth-server";
-import ResourceScreen from "@/features/resource/screens/resource-screen";
 import ProfileScreen from "@/features/profile/screens/profile-screen";
 
 export default async function ProfilePage() {
