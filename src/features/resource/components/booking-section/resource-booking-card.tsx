@@ -51,6 +51,26 @@ export default function ResourceBookingCard(
         return differenceInDays(date.to, date.from) + 1;
     })();
 
+    const originalBookingDuration = (() => {
+        if (!initialDate?.from || !initialDate?.to) return 0;
+
+        if (resource.priceUnit === "hour") {
+            return differenceInHours(initialDate.to, initialDate.from);
+        }
+
+        if (resource.priceUnit === "month") {
+            return differenceInMonths(initialDate.to, initialDate.from);
+        }
+
+        if (resource.priceUnit === "week") {
+            const totalDays =
+                differenceInWeeks(initialDate.to, initialDate.from) + 1;
+            return Math.max(1, Math.round(totalDays / 7));
+        }
+
+        return differenceInDays(initialDate.to, initialDate.from) + 1;
+    })();
+
     const datesSelected = !!(date?.from && date?.to);
 
     const activeBookings =
@@ -88,9 +108,20 @@ export default function ResourceBookingCard(
     const subtotal = datesSelected && bookingDuration > 0
         ? resource.price * bookingDuration
         : 0;
-    const checkoutTotal = subtotal + subtotal * 0.05;
 
-    const submitBooking = () => {
+    const originalSubtotal =
+        mode === "edit" && originalBookingDuration > 0
+            ? resource.price * originalBookingDuration
+            : 0;
+
+    const checkoutTotal = subtotal + subtotal * 0.05;
+    const originalCheckoutTotal = originalSubtotal + originalSubtotal * 0.05;
+    const checkoutDelta =
+        mode === "edit" ? checkoutTotal - originalCheckoutTotal : checkoutTotal;
+
+    const submitBooking = (
+        opts?: { refundAmount?: number; suppressSuccessToast?: boolean },
+    ) => {
         if (!date?.from || !date?.to || isRangeInvalid || isTimeOrderInvalid) {
             return;
         }
@@ -110,7 +141,19 @@ export default function ResourceBookingCard(
                 },
                 {
                     onSuccess: () => {
-                        toast.success("Reservation updated successfully!");
+                        if (!opts?.suppressSuccessToast) {
+                            toast.success("Reservation updated successfully!");
+                        }
+                        if (
+                            typeof opts?.refundAmount === "number" &&
+                            opts.refundAmount > 0
+                        ) {
+                            toast.success(
+                                `Refund of $${opts.refundAmount.toFixed(
+                                    2,
+                                )} will be issued.`,
+                            );
+                        }
                         router.push("/bookings");
                     },
                 },
@@ -130,6 +173,21 @@ export default function ResourceBookingCard(
             );
         }
     };
+
+    const hasChanges = (() => {
+        if (mode !== "edit") return true;
+
+        if (!date?.from || !date?.to) return false;
+
+        if (!initialDate?.from || !initialDate?.to) return true;
+
+        const currentFrom = date.from.getTime();
+        const currentTo = date.to.getTime();
+        const initialFrom = initialDate.from.getTime();
+        const initialTo = initialDate.to.getTime();
+
+        return currentFrom !== initialFrom || currentTo !== initialTo;
+    })();
 
     const handleReset = () => {
         setDate(initialDate);
@@ -169,7 +227,7 @@ export default function ResourceBookingCard(
                 {datesSelected && !isRangeInvalid && !isTimeOrderInvalid &&
                     bookingDuration > 0 && (
                     <div className="animate-in fade-in slide-in-from-top-2">
-                        <BookingPriceSummary
+                <BookingPriceSummary
                             price={resource.price}
                             duration={bookingDuration}
                             priceUnit={resource.priceUnit}
@@ -178,7 +236,27 @@ export default function ResourceBookingCard(
                 )}
 
                 <BookingSubmitButton
-                    onClick={() => setCheckoutOpen(true)}
+                    onClick={() => {
+                        if (mode === "edit" && !hasChanges) {
+                            submitBooking();
+                        } else {
+                            if (mode === "edit") {
+                                if (checkoutDelta <= 0) {
+                                    submitBooking({
+                                        refundAmount:
+                                            checkoutDelta < 0
+                                                ? Math.abs(checkoutDelta)
+                                                : undefined,
+                                    });
+                                    return;
+                                }
+                                setCheckoutOpen(true);
+                                return;
+                            }
+
+                            setCheckoutOpen(true);
+                        }
+                    }}
                     isLoading={isPending}
                     mode={mode}
                     disabled={!datesSelected || bookingDuration <= 0 ||
@@ -190,7 +268,7 @@ export default function ResourceBookingCard(
 
             <BookingCheckoutOverlay
                 isOpen={checkoutOpen}
-                amount={checkoutTotal}
+                amount={mode === "edit" ? Math.max(0, checkoutDelta) : checkoutTotal}
                 onCancel={() => setCheckoutOpen(false)}
                 onConfirm={submitBooking}
             />
