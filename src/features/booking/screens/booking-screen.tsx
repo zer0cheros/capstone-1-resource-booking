@@ -51,7 +51,7 @@ export default function BookingScreen() {
                                     No bookings yet
                                 </h2>
                                 <p className="text-slate-500 font-medium">
-                                    It looks like you haven't reserved anything.
+                                    It looks like you haven&apos;t reserved anything.
                                     Explore our resources to get started!
                                 </p>
                             </div>

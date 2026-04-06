@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { Session } from "@/features/auth/types/session";
 import ResourceForm from "./resource-form";
 
-export default function createResourceDialog(
+export default function CreateResourceDialog(
   { children, user }: { children: React.ReactNode, user: NonNullable<Session["user"]>; },
 ) {
   const [open, setOpen] = useState(false);

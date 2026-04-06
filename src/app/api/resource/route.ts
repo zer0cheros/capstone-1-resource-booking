@@ -3,6 +3,7 @@ import { getPaginatedResources } from "@/features/resource/server/get-resources"
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { createId } from "@paralleldrive/cuid2";
+import { Resource } from "@/features/resource/types/resource";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -70,14 +71,14 @@ export async function POST(req: Request) {
             imageUrl = `/uploads/${filename}`;
         }
 
-        const newResource = await createResource({
+        const newResource:Resource = await createResource({
             name: name.trim(),
             description,
             userId,
             Image: imageUrl,
             price,
-            priceUnit: (priceUnit ?? "hour") as any,
-            category: (category ?? "Apartments & Spaces") as any,
+            priceUnit: (priceUnit ?? "hour") as unknown as Resource["priceUnit"],
+            category: (category ?? "Apartments & Spaces") as unknown as Resource["category"],
         });
 
         return new Response(JSON.stringify(newResource), {

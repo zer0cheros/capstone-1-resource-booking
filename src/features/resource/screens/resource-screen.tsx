@@ -15,7 +15,7 @@ import { Session } from "@/features/auth/types/session";
 import useInfiniteResourcesQuery from "../hooks/use-infinite-resource-query";
 import LoadMoreButton from "../components/load-more-button";
 
-export default function resourceScreen(
+export default function ResourceScreen(
   { user }: { user: NonNullable<Session["user"]> },
 ) {
   const {

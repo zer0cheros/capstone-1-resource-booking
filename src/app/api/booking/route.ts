@@ -39,6 +39,6 @@ export async function DELETE(req: Request) {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) return new Response("Unauthorized", { status: 401 });
     const body = await req.json();
-    const booking = await deleteBooking(body.id, body);
+    const booking = await deleteBooking(body.id);
     return new Response(JSON.stringify(booking), { status: 200 });
 }

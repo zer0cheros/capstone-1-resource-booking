@@ -88,7 +88,7 @@ export default function ManageBookingsScreen() {
                                     </h3>
 
                                     <p className="text-slate-500 font-medium">
-                                        You don't have any pending requests.
+                                        You don&apos;t have any pending requests.
                                     </p>
                                 </div>
                             )}
@@ -123,7 +123,7 @@ export default function ManageBookingsScreen() {
                                     </h3>
 
                                     <p className="text-slate-500 font-medium">
-                                        You don't have any booking history yet.
+                                        You don&apos;t have any booking history yet.
                                     </p>
                                 </div>
                             )}

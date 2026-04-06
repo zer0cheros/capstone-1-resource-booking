@@ -14,7 +14,7 @@ export default function LoadMoreButton({
         return (
             <div className="text-center py-10">
                 <p className="text-slate-400 font-medium text-sm italic">
-                    You've reached the end of the catalog.
+                    You&apos;ve reached the end of the catalog.
                 </p>
             </div>
         );

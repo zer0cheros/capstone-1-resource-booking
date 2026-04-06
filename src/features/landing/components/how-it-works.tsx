@@ -26,8 +26,8 @@ export default function HowItWorks() {
                     </h2>
 
                     <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                        Whether you're looking to save money or earn extra
-                        income, we've got you covered.
+                        Whether you&apos;re looking to save money or earn extra
+                        income, we&apos;ve got you covered.
                     </p>
                 </div>
 
@@ -84,7 +84,7 @@ export default function HowItWorks() {
                                 icon={ClipboardList}
                                 step="02"
                                 title="Manage"
-                                description="Accept requests and oversee your resource's reservation schedule."
+                                description="Accept requests and oversee your resource&apos;s reservation schedule."
                             />
                             <StepCard
                                 icon={Wallet}

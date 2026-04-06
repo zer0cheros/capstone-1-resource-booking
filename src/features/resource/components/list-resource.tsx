@@ -174,7 +174,7 @@ export default function ListResource(
               No resources found
             </h3>
             <p className="text-slate-500 max-w-sm mb-8 text-lg">
-              We couldn't find any resources matching your current filters or
+              We couldn&apos;t find any resources matching your current filters or
               search criteria.
             </p>
             <Button
