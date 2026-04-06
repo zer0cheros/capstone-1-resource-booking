@@ -31,7 +31,11 @@ export const createColumns = (resources: Resource[]): ColumnDef<Booking>[] => [
                 r.id === row.getValue("resourceId")
             );
             if (!resource) {
-                return <span className="text-slate-400">Currently resource was deleted</span>;
+                return (
+                    <span className="text-slate-400">
+                        Currently resource was deleted
+                    </span>
+                );
             }
 
             const imageSrc = resource?.image || "/assets/placeholder.svg";
@@ -187,6 +191,8 @@ export const createColumns = (resources: Resource[]): ColumnDef<Booking>[] => [
 
             const isNotAllowed = new Date(booking.startTime) < new Date();
 
+            const isNotAllowRating = new Date(booking.endTime) > new Date();
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -201,10 +207,18 @@ export const createColumns = (resources: Resource[]): ColumnDef<Booking>[] => [
                         <DropdownMenuLabel className="px-3 py-2 text-slate-500 uppercase text-[10px] tracking-widset font-bold">
                             Actions
                         </DropdownMenuLabel>
-                        <RateResource
-                            resourceId={booking.resourceId}
-                            userId={booking.userId}
-                        />
+                        {isNotAllowRating
+                            ? (
+                                <DropdownMenuItem disabled>
+                                    You can leave a rating after the booking has finished
+                                </DropdownMenuItem>
+                            )
+                            : (
+                                <RateResource
+                                    resourceId={booking.resourceId}
+                                    userId={booking.userId}
+                                />
+                            )}
                         {isNotAllowed
                             ? (
                                 <DropdownMenuItem disabled>
