@@ -11,7 +11,7 @@ export default function ResourceImage({ src, alt }: ResourceImageProps) {
                 src={imageSource}
                 alt={alt}
                 fill
-                className="object-cover transition-transform duration-700 hover:scale-105"
+                className="object-contain transition-transform duration-700 hover:scale-105"
                 priority
                 sizes="(max-width: 768px) 100vw, 60vw"
             />
