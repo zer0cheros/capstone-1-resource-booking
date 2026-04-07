@@ -28,15 +28,16 @@ import {
 import { ResourceFormProps } from "../types/resource";
 import { DialogFooter } from "@/shared/components/ui/dialog";
 import NextImage from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-
+import { UploadButton } from "@/shared/lib/uploadThing";
+import toast from "react-hot-toast";
 export default function ResourceForm(
     { initialData, onSubmit, isPending, submitLabel, onCancel }:
         ResourceFormProps,
 ) {
     const [removeExistingImage, setRemoveExistingImage] = useState(false);
-
+    const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const form = useForm<CreateResourceInput>({
         resolver: zodResolver(createRoesourceSchema),
         defaultValues: {
@@ -46,20 +47,17 @@ export default function ResourceForm(
             userId: initialData?.userId || "",
             price: initialData?.price || undefined,
             priceUnit: initialData?.priceUnit || undefined,
-            image: undefined, // Files can't be set as default values easily
+            image: initialData?.image || uploadedImage || '', // Files can't be set as default values easily
             removeImage: false,
         },
     });
 
     const currentImageFile = form.watch("image");
 
-    const clearImage = () => {
-        form.setValue("image", undefined);
-        if (initialData?.image) {
-            setRemoveExistingImage(true);
-            form.setValue("removeImage", true);
-        }
-    };
+    useEffect(()=> {
+        form.setValue("removeImage", false);
+        form.setValue("image", uploadedImage || '');
+    },[uploadedImage, currentImageFile, form])
 
     return (
         <Form {...form}>
@@ -220,7 +218,7 @@ export default function ResourceForm(
                         )}
                     />
                 </div>
-                <FormField
+                {/* <FormField
                     control={form.control}
                     name="image"
                     render={({ field: { value, onChange, ...field } }) => (
@@ -230,7 +228,6 @@ export default function ResourceForm(
                             </FormLabel>
                             <FormControl>
                                 <div className="space-y-4">
-                                    {/* PREVIEW CONTAINER */}
                                     {(currentImageFile ||
                                         (initialData?.image &&
                                             !removeExistingImage)) && (
@@ -246,7 +243,7 @@ export default function ResourceForm(
                                                 fill
                                                 className="object-cover"
                                             />
-                                            {/* DELETE OVERLAY */}
+                                          
                                             <button
                                                 type="button"
                                                 onClick={clearImage}
@@ -279,8 +276,35 @@ export default function ResourceForm(
                             <FormMessage />
                         </FormItem>
                     )}
+                /> */}
+                 <UploadButton className="bg-gb-blue rounded-xl px-8 shadow-md"
+                  endpoint="imageUploader"
+                   content={{
+                    button({ ready }) {
+                    if (ready) return "Upload image"; // your custom text (no 4MB)
+                    return "Loading...";
+                    },
+                }}
+                  onClientUploadComplete={(res) => {
+                    if (res && res.length > 0) {
+                      setUploadedImage(res[0].url);
+                      toast.success("Image uploaded successfully!", { id: "upload" });
+                    }
+                  }}
+                  onUploadProgress={(progress)=> {
+                    toast.loading(`Uploading: ${progress}%`, { id: "upload" });
+                  }}
+                  onUploadError={(error) => {
+                    console.error(error);
+                  }}
                 />
-
+				{uploadedImage && (
+				<img
+					src={uploadedImage}
+					alt="Uploaded profile"
+					className="w-24 h-24 mt-2 shadow-2xl object-cover"
+				/>
+				)}
                 <DialogFooter className="flex flex-row items-center justify-end gap-3 pt-4">
                     <Button
                         type="button"

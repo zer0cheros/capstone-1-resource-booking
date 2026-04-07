@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+[data-ut-element="allowed-content"] {
+  display: none;
+}
+
 @theme {
   /* Register your custom variable so Tailwind creates 'bg-brand-light' */
   --color-brand-light: var(--brand-light);

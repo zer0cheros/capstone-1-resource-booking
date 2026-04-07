@@ -4,7 +4,7 @@ export const createResourceSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
     userId: z.string().min(1, "User ID is required"),
-    image: z.instanceof(File).optional(),
+    image: z.string().optional(),
     removeImage: z.boolean().optional(),
     price: z.number().min(0, "Price must be a positive number"),
     priceUnit: z.enum(["hour", "day", "week", "month"]),

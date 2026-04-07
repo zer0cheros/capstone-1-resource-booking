@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { Session } from "@/features/auth/types/session";
 import ResourceForm from "./resource-form";
 
+
 export default function CreateResourceDialog(
   { children, user }: { children: React.ReactNode, user: NonNullable<Session["user"]>; },
 ) {
@@ -38,6 +39,7 @@ export default function CreateResourceDialog(
     },
   });
   const onSubmit = async (values: CreateResourceInput) => {
+    console.log("Submitting form with values:", values); // Debug log
     try {
       const formData = new FormData();
       formData.append("category", values.category);
@@ -46,9 +48,7 @@ export default function CreateResourceDialog(
       formData.append("userId", user.id);
       formData.append("price", (values.price ?? 0).toString());
       formData.append("priceUnit", values.priceUnit);
-      if (values.image instanceof File) {
-        formData.append("image", values.image);
-      }
+      formData.append("image", values.image || '');
 
       await mutateAsync(formData);
 

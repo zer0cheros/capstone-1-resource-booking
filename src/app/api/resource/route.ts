@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         const name = formData.get("name") as string;
         const description = (formData.get("description") as string) ?? "";
         const userId = formData.get("userId") as string;
-        const imageFile = formData.get("image") as File | null;
+        const imageFile = formData.get("image") as string;
         const priceRaw = formData.get("price");
         const priceUnit = formData.get("priceUnit") as string | null;
         const category = formData.get("category") as string | null;
@@ -60,22 +60,22 @@ export async function POST(req: Request) {
 
         let imageUrl: string | undefined;
 
-        if (imageFile && imageFile.size > 0) {
-            const ext = path.extname(imageFile.name) || ".jpg";
-            const filename = `${createId()}${ext}`;
-            const uploadsDir = path.join(process.cwd(), "public", "uploads");
-            await mkdir(uploadsDir, { recursive: true });
-            const filepath = path.join(uploadsDir, filename);
-            const buffer = Buffer.from(await imageFile.arrayBuffer());
-            await writeFile(filepath, buffer);
-            imageUrl = `/uploads/${filename}`;
-        }
+        // if (imageFile && imageFile.size > 0) {
+        //     const ext = path.extname(imageFile.name) || ".jpg";
+        //     const filename = `${createId()}${ext}`;
+        //     const uploadsDir = path.join(process.cwd(), "public", "uploads");
+        //     await mkdir(uploadsDir, { recursive: true });
+        //     const filepath = path.join(uploadsDir, filename);
+        //     const buffer = Buffer.from(await imageFile.arrayBuffer());
+        //     await writeFile(filepath, buffer);
+        //     imageUrl = `/uploads/${filename}`;
+        // }
 
         const newResource:Resource = await createResource({
             name: name.trim(),
             description,
             userId,
-            Image: imageUrl,
+            Image: imageFile,
             price,
             priceUnit: (priceUnit ?? "hour") as unknown as Resource["priceUnit"],
             category: (category ?? "Apartments & Spaces") as unknown as Resource["category"],
