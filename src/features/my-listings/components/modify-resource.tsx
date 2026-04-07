@@ -35,7 +35,7 @@ export default function ModifyResource(
                 formData.append("removeImage", "true");
             }
 
-            if (values.image instanceof File) {
+            if (values.image ) {
                 formData.append("image", values.image);
             }
 
