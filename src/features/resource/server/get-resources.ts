@@ -47,7 +47,7 @@ export async function getPaginatedResources(limit: number, cursor?: string) {
         .leftJoin(rating, eq(resource.id, rating.resourceId))
         .where(cursor ? gt(resource.id, cursor) : undefined)
         .groupBy(resource.id)
-        .orderBy(asc(resource.createdAt))
+        .orderBy(asc(resource.id))
         .limit(limit + 1);
 
     const hasNextPage = results.length > limit;

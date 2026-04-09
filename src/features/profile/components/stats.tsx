@@ -13,8 +13,8 @@ export default function Stats(
         hostRatingPending?: boolean;
     },
 ) {
-    const listingsCount = resources?.length.toString();
-    const bookingsCount = bookings?.length.toString();
+    const listingsCount = (resources?.length ?? 0).toString();
+    const bookingsCount = (bookings?.length ?? 0).toString();
 
     const trustDisplay = (() => {
         if (hostRatingPending) return "…";

@@ -5,6 +5,7 @@ import Stats from "../components/stats";
 import DetailsForm from "../components/details-form";
 import { ProfileProps } from "../types/profile";
 import useResourcesQuery from "@/features/resource/hooks/use-resource-query";
+import { Resource } from "@/features/resource/types/resource";
 import useBookingQuery from "@/features/booking/hooks/use-booking-query";
 import FinanceSection from "../components/finance-section";
 import SupportCard from "../components/support-card";
@@ -12,7 +13,8 @@ import useManageBookingsQuery from "@/features/manage-bookings/hooks/use-manage-
 import useHostListingRatingStats from "../hooks/use-host-listing-rating-stats";
 
 export default function ProfileScreen({ user }: ProfileProps) {
-    const { data: resources } = useResourcesQuery();
+    const { data: allResources } = useResourcesQuery();
+    const resources = allResources?.filter((r: Resource) => r.userId === user.id);
     const { data: bookings } = useBookingQuery();
 
     const { data: requests } = useManageBookingsQuery();
